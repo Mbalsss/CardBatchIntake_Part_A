@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:5000
+@batchId = 00000000-0000-0000-0000-000000000000
+
+### Root status
+GET {{baseUrl}}/
+
+### Submit a valid batch
+POST {{baseUrl}}/api/batches
+Content-Type: application/json
+
+{
+  "clientCode": "KAYA",
+  "fileName": "KAYA_20261018_001.txt",
+  "expectedRecordCount": 1,
+  "records": [
+    {
+      "recordId": "R0001",
+      "cardholderName": "T MOKOENA",
+      "maskedPan": "************4821",
+      "productCode": "DEBIT_GOLD",
+      "expiry": "09/29"
+    }
+  ]
+}
+
+### List batches
+GET {{baseUrl}}/api/batches?clientCode=KAYA&status=Accepted&page=1&pageSize=20
+
+### Get a batch by ID
+GET {{baseUrl}}/api/batches/{{batchId}}
+
+### Release a batch
+POST {{baseUrl}}/api/batches/{{batchId}}/release
